@@ -1241,8 +1241,10 @@ MonoBehaviour:
   - {fileID: 6968444925269573108, guid: 8c1c750131db2c54496c939d2d7ea74a, type: 3}
   level: 0
   timeRepeat: 15
+  timer: 0
   summoner: {fileID: 519420033}
   count: 0
+  spawning: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1269,7 +1271,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.5101457
+  orthographic size: 6.6520305
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1293,7 +1295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0.05, y: 0.32, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1312,10 +1314,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 519420030}
+  gap: 0.3
   levelFirstSpawn: 0
   currentLevel: 0
   quantityToSpawn: 0
-  t: 2
+  t: 0.5
+  spawning: 0
   summonPlaceList:
   - {fileID: 1253814744}
   - {fileID: 437691381}

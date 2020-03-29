@@ -57,7 +57,7 @@ public class Monster : MonoBehaviour
         if (collision.gameObject.tag == "Gate" || collision.gameObject.tag == "Player") {
             moveable = false;
             hit = collision;
-            print("Hit Sthing");
+
             StartCoroutine(Attack());
         }
     }
@@ -71,16 +71,19 @@ public class Monster : MonoBehaviour
     public void DealDamage()
     {
         bool ret=false;
-        if (hit.gameObject.tag == "Gate")
+        if (hit != null)
         {
-            print("deal damage");
-            ret=hit.gameObject.GetComponent<Wall>().TakeDamage(damage);
+            if (hit.gameObject.tag == "Gate")
+            {
+                ret = hit.gameObject.GetComponent<Wall>().TakeDamage(damage);
 
+            }
+            if (hit.gameObject.tag == "Player")
+            {
+                ret = hit.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
+            }
         }
-        if (hit.gameObject.tag == "Player")
-        {
-            ret=hit.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
-        }
+       
         if (ret == false) { startAttack = false; }
     }
     private IEnumerator Attack()
@@ -107,7 +110,6 @@ public class Monster : MonoBehaviour
     {
         this.hp -= hp;
         if (this.hp <= 0) {
-            print("monster dead");
             gameManager.count -= 1;
             Color temp= spriteRenderer.color;
             temp.a = 150;

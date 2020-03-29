@@ -5,12 +5,13 @@ using Random=UnityEngine.Random;
 
 public class SummonManager : MonoBehaviour
 {
-    public GameManager gameManager; 
-
+    public GameManager gameManager;
+    public float gap;
     public int levelFirstSpawn;
     public int currentLevel;
     public int quantityToSpawn;
     public float t;
+    public bool spawning;
     public class MonsterInfo
     {
         
@@ -50,8 +51,11 @@ public class SummonManager : MonoBehaviour
     public void Spawn()
     {
         //summoning...
+        print("spawning");
         int[] buffer = new int[4] ;
+        print("quantity= " + quantityToSpawn);
         int num = quantityToSpawn;
+        
         foreach (MonsterInfo monster in MonsterSet)
         {
             int numRespawn = num * monster.spawnRate / 100;
@@ -63,18 +67,19 @@ public class SummonManager : MonoBehaviour
 
                 Vector3 pos = summonPlaceList[summonPlaceIndex].position;
                 if (summonPlaceIndex == 0)
-                    pos -= new Vector3(buffer[summonPlaceIndex], 0, 0);
+                    pos -= new Vector3(buffer[summonPlaceIndex]+gap, 0, 0);
                 if (summonPlaceIndex == 1)
-                    pos += new Vector3(0, buffer[summonPlaceIndex], 0);
+                    pos += new Vector3(0, buffer[summonPlaceIndex] + gap, 0);
                 if (summonPlaceIndex == 2)
-                    pos += new Vector3(buffer[summonPlaceIndex], 0, 0);
+                    pos += new Vector3(buffer[summonPlaceIndex] + gap, 0, 0);
                 if (summonPlaceIndex == 3)
-                    pos -= new Vector3(0, buffer[summonPlaceIndex], 0);
-
+                    pos -= new Vector3(0, buffer[summonPlaceIndex] + gap, 0);
+                
                 Instantiate(monster.monster, pos, Quaternion.identity);
             }
            
         }
+        
         //fix spawn Rate
         bool firstLess50 = false;
         foreach (MonsterInfo monster in MonsterSet)
@@ -88,17 +93,17 @@ public class SummonManager : MonoBehaviour
             {
                 if (firstLess50) break;
                 firstLess50 = true;
-                monster.spawnRate += 10;
+                monster.spawnRate += 30;
             }
-          
-
-            
-            //update quantity to spawn
-            gameManager.count += quantityToSpawn;
-            quantityToSpawn = (int)Mathf.Round(quantityToSpawn * t);
-            currentLevel++;
-            //update current number of monsters
-            
+ 
         }
+
+        //update quantity to spawn
+        gameManager.count += quantityToSpawn;
+        quantityToSpawn = (int)Mathf.Round(quantityToSpawn+t);
+        currentLevel++;
+        gameManager.spawning = false;
+        //update current number of monsters
+        print("end");
     }
 }
